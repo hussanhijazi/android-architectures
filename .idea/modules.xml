@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/retrofit-rxjava-githubapi.iml" filepath="$PROJECT_DIR$/retrofit-rxjava-githubapi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/retrofit-rxjava-databinding.iml" filepath="$PROJECT_DIR$/retrofit-rxjava-databinding.iml" />
     </modules>
   </component>
 </project>
