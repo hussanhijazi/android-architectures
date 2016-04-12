@@ -1,8 +1,12 @@
 
 package br.com.hussan.githubapi.models;
 
+import android.databinding.BindingAdapter;
+import android.widget.ImageView;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.squareup.picasso.Picasso;
 
 public class Repository {
 
@@ -210,6 +214,14 @@ public class Repository {
     @SerializedName("default_branch")
     @Expose
     private String defaultBranch;
+
+    @BindingAdapter({"bind:loadImage"})
+    public static void loadImage(ImageView view, String imageUrl) {
+        Picasso.with(view.getContext())
+                .load(imageUrl)
+//                .placeholder(android.R.drawable.p)
+                .into(view);
+    }
 
     /**
      * 

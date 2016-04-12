@@ -1,4 +1,4 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="repo"
@@ -7,18 +7,24 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:gravity="center"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        >
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="@{repo.name}"
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:loadImage="@{repo.owner.avatarUrl}"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
             />
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="@{repo.homepage}"
+            android:layout_height="wrap_content"
+            android:text="@{repo.name != null ? repo.name : @string/app_name}"
             />
     </LinearLayout>
 </layout>
