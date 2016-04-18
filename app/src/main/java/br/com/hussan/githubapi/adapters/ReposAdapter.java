@@ -42,7 +42,6 @@ public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.ViewHolder> 
         public ViewHolder(View v) {
             super(v);
             binding = DataBindingUtil.bind(v);
-//            mTextView = (TextView) v.findViewById(R.id.title);
         }
         public ItemListBinding getBinding() {
             return binding;
@@ -56,22 +55,23 @@ public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.ViewHolder> 
     @Override
     public ReposAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                       int viewType) {
+
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_list, parent, false);
+
         v.setOnClickListener(click -> {
             clickListener.onClick();
         });
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+
+        return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
         final Repository repository = mDataset.get(position);
         holder.getBinding().setVariable(BR.repo, repository);
         holder.getBinding().executePendingBindings();
-//        holder.mTextView.setText(mDataset.get(position).getName());
-
     }
 
     @Override

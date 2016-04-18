@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity implements ReposAdapter.Clic
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(repositories -> {
                     mAdapter.setItems(repositories);
-                    mAdapter.notifyDataSetChanged();
                     mProgress.setVisibility(View.GONE);
                     mRecyclerView.setVisibility(View.VISIBLE);
                 });
