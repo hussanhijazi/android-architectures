@@ -12,7 +12,7 @@ import android.widget.ProgressBar;
 
 import java.util.List;
 
-import br.com.hussan.githubapi.adapters.ReposAdapter;
+import br.com.hussan.githubapi.adapters.RepositoryAdapter;
 import br.com.hussan.githubapi.api.ApiClientGenerator;
 import br.com.hussan.githubapi.api.ApiInterface;
 import br.com.hussan.githubapi.models.Repository;
@@ -20,11 +20,11 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class MainActivity extends AppCompatActivity implements ReposAdapter.ClickItem{
+public class MainActivity extends AppCompatActivity implements RepositoryAdapter.ClickItem{
 
     private RecyclerView mRecyclerView;
     private ProgressBar mProgress;
-    private ReposAdapter mAdapter;
+    private RepositoryAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements ReposAdapter.Clic
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new ReposAdapter();
+        mAdapter = new RepositoryAdapter();
         mAdapter.setClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -61,8 +61,8 @@ public class MainActivity extends AppCompatActivity implements ReposAdapter.Clic
         ApiInterface githubService =
                 ApiClientGenerator.createService(ApiInterface.class);
 
-
         Observable<List<Repository>> observable = githubService.repositories("helabs");
+
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(repositories -> {

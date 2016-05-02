@@ -1,6 +1,8 @@
 
 package br.com.hussan.githubapi.models;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
 import android.widget.ImageView;
 
@@ -8,7 +10,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.squareup.picasso.Picasso;
 
-public class Repository {
+import br.com.hussan.githubapi.BR;
+
+public class Repository extends BaseObservable {
 
     @SerializedName("id")
     @Expose
@@ -219,7 +223,6 @@ public class Repository {
     public static void loadImage(ImageView view, String imageUrl) {
         Picasso.with(view.getContext())
                 .load(imageUrl)
-//                .placeholder(android.R.drawable.p)
                 .into(view);
     }
 
@@ -246,17 +249,17 @@ public class Repository {
      * @return
      *     The name
      */
-    public String getName() {
+
+    @Bindable
+    public String getName()
+    {
         return name;
     }
 
-    /**
-     * 
-     * @param name
-     *     The name
-     */
     public void setName(String name) {
+
         this.name = name;
+        notifyPropertyChanged(BR.name);
     }
 
     /**

@@ -3,25 +3,24 @@ package br.com.hussan.githubapi.adapters;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
 
 import br.com.hussan.githubapi.BR;
-import br.com.hussan.githubapi.MainActivity;
 import br.com.hussan.githubapi.R;
-import br.com.hussan.githubapi.databinding.ItemListBinding;
+import br.com.hussan.githubapi.databinding.ListItemBinding;
 import br.com.hussan.githubapi.models.Repository;
+
 
 /**
  * Created by hussan on 4/11/16.
  */
-public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.ViewHolder> {
+public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.ViewHolder> {
     private List<Repository> mDataset;
-    private MainActivity clickListener;
+    private RepositoryAdapter.ClickItem clickListener;
 
-    public ReposAdapter() {
+    public RepositoryAdapter() {
 
     }
 
@@ -29,41 +28,44 @@ public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.ViewHolder> 
         void onClick();
     }
 
-    public void setClickListener(MainActivity clickListener) {
+    public void setClickListener(RepositoryAdapter.ClickItem clickListener) {
         this.clickListener = clickListener;
     }
 
-    public MainActivity getClickListener() {
+    public RepositoryAdapter.ClickItem getClickListener() {
         return clickListener;
-    }
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        private ItemListBinding binding;
-        public ViewHolder(View v) {
-            super(v);
-            binding = DataBindingUtil.bind(v);
-        }
-        public ItemListBinding getBinding() {
-            return binding;
-        }
     }
 
     public void setItems(List<Repository> myDataset) {
         mDataset = myDataset;
     }
 
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private ListItemBinding binding;
+
+        public ViewHolder(ListItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
+
+        public ListItemBinding getBinding() {
+            return binding;
+        }
+    }
+
     @Override
-    public ReposAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                      int viewType) {
+    public RepositoryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                           int viewType) {
 
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_list, parent, false);
 
-        v.setOnClickListener(click -> {
+        ListItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
+                R.layout.list_item, parent, false);
+
+        binding.getRoot().setOnClickListener(click -> {
             clickListener.onClick();
         });
+        return new ViewHolder(binding);
 
-        return new ViewHolder(v);
     }
 
     @Override
