@@ -15,6 +15,7 @@ import java.util.List;
 import br.com.hussan.githubapi.adapters.RepositoryAdapter;
 import br.com.hussan.githubapi.api.ApiClientGenerator;
 import br.com.hussan.githubapi.api.ApiInterface;
+import br.com.hussan.githubapi.databinding.ListItemBinding;
 import br.com.hussan.githubapi.models.Repository;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -100,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements RepositoryAdapter
     }
 
     @Override
-    public void onClick() {
-        Log.d("h2", "click");
+    public void onClick(ListItemBinding binding) {
+        Log.d("h2", "click" + binding.getRepo().getName());
     }
 }

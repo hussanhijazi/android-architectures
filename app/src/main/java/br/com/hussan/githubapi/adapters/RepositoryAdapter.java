@@ -25,7 +25,7 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Vi
     }
 
     public interface ClickItem {
-        void onClick();
+        void onClick(ListItemBinding binding);
     }
 
     public void setClickListener(RepositoryAdapter.ClickItem clickListener) {
@@ -62,7 +62,7 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Vi
                 R.layout.list_item, parent, false);
 
         binding.getRoot().setOnClickListener(click -> {
-            clickListener.onClick();
+            clickListener.onClick(binding);
         });
         return new ViewHolder(binding);
 
@@ -71,8 +71,8 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        final Repository repository = mDataset.get(position);
-        holder.getBinding().setVariable(BR.repo, repository);
+        holder.getBinding().setVariable(BR.repo, mDataset.get(position));
+//        holder.getBinding().setRepo(mDataset.get(position));
         holder.getBinding().executePendingBindings();
     }
 
