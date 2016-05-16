@@ -1,8 +1,10 @@
 package br.com.hussan.githubapi.adapters;
 
+import android.app.LauncherActivity;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
@@ -28,6 +30,12 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Vi
         void onClick(ListItemBinding binding);
     }
 
+    public static class ViewHolder extends DataBoundViewHolder<ListItemBinding> {
+        public ViewHolder(ListItemBinding binding) {
+            super(binding);
+        }
+    }
+
     public void setClickListener(RepositoryAdapter.ClickItem clickListener) {
         this.clickListener = clickListener;
     }
@@ -40,26 +48,15 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Vi
         mDataset = myDataset;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        private ListItemBinding binding;
-
-        public ViewHolder(ListItemBinding binding) {
-            super(binding.getRoot());
-            this.binding = binding;
-        }
-
-        public ListItemBinding getBinding() {
-            return binding;
-        }
-    }
-
     @Override
     public RepositoryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                            int viewType) {
 
-
         ListItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
                 R.layout.list_item, parent, false);
+
+//        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
+//        ListItemBinding binding = ListItemBinding.bind(view);
 
         binding.getRoot().setOnClickListener(click -> {
             clickListener.onClick(binding);
