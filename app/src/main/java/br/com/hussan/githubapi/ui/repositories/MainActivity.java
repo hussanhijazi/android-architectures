@@ -12,8 +12,10 @@ import android.widget.ProgressBar;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import br.com.hussan.githubapi.GithubApp;
 import br.com.hussan.githubapi.R;
-import br.com.hussan.githubapi.data.api.ApiClientGenerator;
 import br.com.hussan.githubapi.data.api.ApiInterface;
 import br.com.hussan.githubapi.databinding.ListItemBinding;
 import br.com.hussan.githubapi.data.model.Repository;
@@ -22,6 +24,9 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity implements RepositoryAdapter.ClickItem{
+
+    @Inject
+    ApiInterface apiService;
 
     private RecyclerView mRecyclerView;
     private ProgressBar mProgress;
@@ -32,6 +37,10 @@ public class MainActivity extends AppCompatActivity implements RepositoryAdapter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ((GithubApp) getApplication()).getComponent()
+                .createUiComponent()
+                .inject(this);
 
         initUI();
         callApi();
@@ -58,10 +67,7 @@ public class MainActivity extends AppCompatActivity implements RepositoryAdapter
     }
 
     private void callApi() {
-        ApiInterface githubService =
-                ApiClientGenerator.createService(ApiInterface.class);
-
-        Observable<List<Repository>> observable = githubService.repositories("helabs");
+        Observable<List<Repository>> observable = apiService.repositories("helabs");
 
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
