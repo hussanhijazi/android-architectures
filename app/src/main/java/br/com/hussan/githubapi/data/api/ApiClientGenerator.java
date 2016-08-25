@@ -1,4 +1,4 @@
-package br.com.hussan.githubapi.api;
+package br.com.hussan.githubapi.data.api;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;

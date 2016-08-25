@@ -1,18 +1,17 @@
-package br.com.hussan.githubapi.adapters;
+package br.com.hussan.githubapi.ui.repositories;
 
-import android.app.LauncherActivity;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
 
 import br.com.hussan.githubapi.BR;
 import br.com.hussan.githubapi.R;
+import br.com.hussan.githubapi.widget.DataBoundViewHolder;
 import br.com.hussan.githubapi.databinding.ListItemBinding;
-import br.com.hussan.githubapi.models.Repository;
+import br.com.hussan.githubapi.data.model.Repository;
 
 
 /**

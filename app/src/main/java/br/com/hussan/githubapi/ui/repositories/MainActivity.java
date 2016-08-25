@@ -1,4 +1,4 @@
-package br.com.hussan.githubapi;
+package br.com.hussan.githubapi.ui.repositories;
 
 import android.graphics.PorterDuff;
 import android.support.v4.content.ContextCompat;
@@ -12,11 +12,11 @@ import android.widget.ProgressBar;
 
 import java.util.List;
 
-import br.com.hussan.githubapi.adapters.RepositoryAdapter;
-import br.com.hussan.githubapi.api.ApiClientGenerator;
-import br.com.hussan.githubapi.api.ApiInterface;
+import br.com.hussan.githubapi.R;
+import br.com.hussan.githubapi.data.api.ApiClientGenerator;
+import br.com.hussan.githubapi.data.api.ApiInterface;
 import br.com.hussan.githubapi.databinding.ListItemBinding;
-import br.com.hussan.githubapi.models.Repository;
+import br.com.hussan.githubapi.data.model.Repository;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
