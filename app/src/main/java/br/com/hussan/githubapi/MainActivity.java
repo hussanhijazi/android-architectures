@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements RepositoryAdapter
 
         initUI();
         callApi();
-
     }
 
     private void initUI() {
