@@ -1,1 +1,1 @@
-# retrofit-rxjava-databinding-dagger2
+# retrofit-rxjava-databinding
