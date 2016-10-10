@@ -1,5 +1,5 @@
 
-package br.com.hussan.githubapi.models;
+package br.com.hussan.githubapi.data.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

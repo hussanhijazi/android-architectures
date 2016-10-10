@@ -5,7 +5,7 @@
         <!-- define variable -->
         <variable
             name="repo"
-            type="br.com.hussan.githubapi.models.Repository" />
+            type="br.com.hussan.githubapi.data.model.Repository" />
     </data>
     <LinearLayout
         android:layout_width="match_parent"

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    tools:context="br.com.hussan.githubapi.MainActivity">
+    tools:context="br.com.hussan.githubapi.ui.repositories.MainActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list_repos"

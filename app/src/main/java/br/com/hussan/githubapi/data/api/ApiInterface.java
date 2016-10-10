@@ -1,8 +1,8 @@
-package br.com.hussan.githubapi.api;
+package br.com.hussan.githubapi.data.api;
 
 import java.util.List;
 
-import br.com.hussan.githubapi.models.Repository;
+import br.com.hussan.githubapi.data.model.Repository;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import rx.Observable;

@@ -1,5 +1,5 @@
 
-package br.com.hussan.githubapi.models;
+package br.com.hussan.githubapi.data.model;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
