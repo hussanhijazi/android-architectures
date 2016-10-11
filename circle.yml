@@ -1,0 +1,19 @@
+machine:
+  java:
+    version: openjdk8
+
+general:
+  branches:
+    only:
+      - master
+      - develop
+
+dependencies:
+  pre:
+    - echo y | android update sdk --no-ui --all --filter "tools,android-23,build-tools-23.0.3,platform-tools,extra-android-m2repository,extra-google-m2repository,extra-google-google_play_services"
+  override:
+    - ./gradlew dependencies
+
+test:
+  override:
+  - ./gradlew test

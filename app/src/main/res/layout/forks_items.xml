@@ -9,7 +9,7 @@
         <!-- Dafine variable -->
         <variable
             name="repo"
-            type="br.com.hussan.githubapi.models.Repository" />
+            type="br.com.hussan.githubapi.data.models.Repository" />
     </data>
 
     <TextView
