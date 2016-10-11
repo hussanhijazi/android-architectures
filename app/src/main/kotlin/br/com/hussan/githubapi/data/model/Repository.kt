@@ -894,9 +894,10 @@ class Repository : BaseObservable() {
     @Expose
     var defaultBranch: String? = null
 
-    companion object {
 
+    object CustomBindingAdapter{
         @BindingAdapter("bind:loadImage")
+        @JvmStatic
         fun loadImage(view: ImageView, imageUrl: String) {
             Picasso.with(view.context).load(imageUrl).into(view)
         }
