@@ -6,26 +6,25 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
-
-import javax.inject.Inject
-
 import br.com.hussan.githubapi.GithubApp
 import br.com.hussan.githubapi.R
 import br.com.hussan.githubapi.adapters.RepositoryAdapter
 import br.com.hussan.githubapi.data.api.ApiInterface
 import br.com.hussan.githubapi.data.model.Repository
 import br.com.hussan.githubapi.databinding.ListItemBinding
-import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), RepositoryAdapter.ClickItem {
+class MainActivity : AppCompatActivity(), RepositoryAdapter.ClickItem, RepositoriesContract.View {
 
     @Inject
     lateinit var apiService: ApiInterface
+
+    @Inject
+    lateinit var presenter: RepositoriesPresenter
 
     private var mRecyclerView: RecyclerView? = null
     private var mProgress: ProgressBar? = null
@@ -72,35 +71,11 @@ class MainActivity : AppCompatActivity(), RepositoryAdapter.ClickItem {
             mRecyclerView!!.visibility = View.VISIBLE
         }
 
-        //        .subscribe(new Subscriber<List<Repository>>() {
-        //            @Override
-        //            public void onCompleted() {
-        //                Toast.makeText(getApplicationContext(),
-        //                        "Completed",
-        //                        Toast.LENGTH_SHORT)
-        //                        .show();
-        //            }
-        //
-        //            @Override
-        //            public void onError(Throwable e) {
-        //                Toast.makeText(getApplicationContext(),
-        //                        e.getMessage(),
-        //                        Toast.LENGTH_SHORT)
-        //                        .show();
-        //            }
-        //
-        //            @Override
-        //            public void onNext(List<Repository> repositories) {
-        //                mAdapter.setItems(repositories);
-        //                mAdapter.notifyDataSetChanged();
-        //                mProgress.setVisibility(View.GONE);
-        //                mRecyclerView.setVisibility(View.VISIBLE);
-        //            }
-        //        });
-
     }
-
+    override fun setRepositories(repositories: List<Repository>) {
+        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
     override fun onClick(binding: ListItemBinding) {
-        Log.d("h2", "click" + binding.repo.name!!)
+//        Log.d("h2", "click" + binding.repo.name!!)
     }
 }
