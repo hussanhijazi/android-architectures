@@ -31,10 +31,10 @@ class Repository : BaseObservable() {
     @SerializedName("name")
     @Expose
     var name: String? = null
-//        set(name) {
-//            field = name
+        set(name) {
+            field = name
 //            notifyPropertyChanged(BR.name)
-//        }
+        }
     /**
 
      * @return

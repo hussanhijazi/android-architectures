@@ -14,31 +14,37 @@ import br.com.hussan.githubapi.adapters.RepositoryAdapter
 import br.com.hussan.githubapi.data.api.ApiInterface
 import br.com.hussan.githubapi.data.model.Repository
 import br.com.hussan.githubapi.databinding.ListItemBinding
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
+import br.com.hussan.githubapi.ui.repositories.ui.PresenterModule
+import br.com.hussan.githubapi.ui.repositories.ui.UiComponent
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), RepositoryAdapter.ClickItem, RepositoriesContract.View {
+class RepositoriesActivity : AppCompatActivity(), RepositoryAdapter.ClickItem, RepositoriesContract.View {
 
     @Inject
     lateinit var apiService: ApiInterface
 
     @Inject
-    lateinit var presenter: RepositoriesPresenter
+    lateinit var presenter: RepositoriesContract.Presenter
 
     private var mRecyclerView: RecyclerView? = null
     private var mProgress: ProgressBar? = null
     private var mAdapter: RepositoryAdapter? = null
     private var mLayoutManager: RecyclerView.LayoutManager? = null
 
+    lateinit var uiComponent: UiComponent
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        uiComponent = (application as GithubApp).component.plus(PresenterModule(this))
+
         super.onCreate(savedInstanceState)
+
+        uiComponent.inject(this)
+
         setContentView(R.layout.activity_main)
 
-        (application as GithubApp).component.inject(this)
-
         initUI()
-        callApi()
+
+        presenter.getAllRepositories()
 
     }
 
@@ -49,31 +55,21 @@ class MainActivity : AppCompatActivity(), RepositoryAdapter.ClickItem, Repositor
         mProgress!!.indeterminateDrawable.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), PorterDuff.Mode.MULTIPLY)
 
 
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
         mRecyclerView!!.setHasFixedSize(true)
 
-        // use a linear layout manager
         mLayoutManager = LinearLayoutManager(this)
         mRecyclerView!!.layoutManager = mLayoutManager
 
         mAdapter = RepositoryAdapter()
         mAdapter!!.clickListener = this
         mRecyclerView!!.adapter = mAdapter
-    }
-
-    private fun callApi() {
-        val observable = apiService!!.repositories("helabs")
-
-        observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe { repositories ->
-            mAdapter!!.setItems(repositories)
-            mProgress!!.visibility = View.GONE
-            mRecyclerView!!.visibility = View.VISIBLE
-        }
 
     }
+
     override fun setRepositories(repositories: List<Repository>) {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+        mAdapter!!.setItems(repositories)
+        mProgress!!.visibility = View.GONE
+        mRecyclerView!!.visibility = View.VISIBLE
     }
     override fun onClick(binding: ListItemBinding) {
 //        Log.d("h2", "click" + binding.repo.name!!)

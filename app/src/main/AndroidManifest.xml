@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:name=".GithubApp"
         android:theme="@style/AppTheme">
-        <activity android:name="br.com.hussan.githubapi.ui.repositories.MainActivity">
+        <activity android:name="br.com.hussan.githubapi.ui.repositories.RepositoriesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

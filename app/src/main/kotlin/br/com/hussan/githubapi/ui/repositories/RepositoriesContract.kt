@@ -12,6 +12,7 @@ interface RepositoriesContract{
         fun setRepositories(repositories: List<Repository>)
     }
     interface Presenter:BasePresenter{
-
+        fun getAllRepositories()
     }
 }
+
