@@ -1,4 +1,4 @@
-package br.com.hussan.githubapi.adapters
+package br.com.hussan.githubapi.ui.repositories
 
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import br.com.hussan.githubapi.BR
 import br.com.hussan.githubapi.R
+import br.com.hussan.githubapi.utils.DataBoundViewHolder
 import br.com.hussan.githubapi.data.model.Repository
 import br.com.hussan.githubapi.databinding.ListItemBinding
-
 
 
 /**
@@ -16,7 +16,7 @@ import br.com.hussan.githubapi.databinding.ListItemBinding
  */
 class RepositoryAdapter : RecyclerView.Adapter<RepositoryAdapter.ViewHolder>() {
     private var mDataset: List<Repository>? = null
-    var clickListener: RepositoryAdapter.ClickItem? = null
+    var clickListener: ClickItem? = null
 
     interface ClickItem {
         fun onClick(binding: ListItemBinding)
@@ -29,23 +29,19 @@ class RepositoryAdapter : RecyclerView.Adapter<RepositoryAdapter.ViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup,
-                                    viewType: Int): RepositoryAdapter.ViewHolder {
+                                    viewType: Int): ViewHolder {
 
         val binding = DataBindingUtil.inflate<ListItemBinding>(LayoutInflater.from(parent.context),
                 R.layout.list_item, parent, false)
 
-        //        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
-        //        ListItemBinding binding = ListItemBinding.bind(view);
-
-        binding.root.setOnClickListener { click -> clickListener!!.onClick(binding) }
+        binding.root.setOnClickListener { click -> clickListener?.onClick(binding) }
         return ViewHolder(binding)
 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.binding.setVariable(BR.repo, mDataset!![position])
-        //        holder.getBinding().setRepo(mDataset.get(position));
+        holder.binding.setVariable(BR.repo, mDataset?.get(position))
         holder.binding.executePendingBindings()
     }
 

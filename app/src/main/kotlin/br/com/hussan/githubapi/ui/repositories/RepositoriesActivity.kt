@@ -6,45 +6,53 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
-import br.com.hussan.githubapi.GithubApp
 import br.com.hussan.githubapi.R
-import br.com.hussan.githubapi.adapters.RepositoryAdapter
-import br.com.hussan.githubapi.data.api.ApiInterface
 import br.com.hussan.githubapi.data.model.Repository
 import br.com.hussan.githubapi.databinding.ListItemBinding
-import br.com.hussan.githubapi.ui.repositories.ui.PresenterModule
-import br.com.hussan.githubapi.ui.repositories.ui.UiComponent
-import javax.inject.Inject
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
+import rx.subscriptions.CompositeSubscription
 
-class RepositoriesActivity : AppCompatActivity(), RepositoryAdapter.ClickItem, RepositoriesContract.View {
+class RepositoriesActivity : RepositoryAdapter.ClickItem, AppCompatActivity() {
 
-    @Inject
-    lateinit var apiService: ApiInterface
+    private val TAG = RepositoriesActivity::class.java.simpleName
 
-    @Inject
-    lateinit var presenter: RepositoriesContract.Presenter
+    private val viewModel: RepositoriesViewModel by lazy {
+        RepositoriesViewModel()
+    }
 
     private var mRecyclerView: RecyclerView? = null
     private var mProgress: ProgressBar? = null
     private var mAdapter: RepositoryAdapter? = null
     private var mLayoutManager: RecyclerView.LayoutManager? = null
 
-    lateinit var uiComponent: UiComponent
+    private val mSubscription = CompositeSubscription()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        uiComponent = (application as GithubApp).component.plus(PresenterModule(this))
 
         super.onCreate(savedInstanceState)
-
-        uiComponent.inject(this)
 
         setContentView(R.layout.activity_main)
 
         initUI()
 
-        presenter.getAllRepositories()
+        mSubscription.add(
+                viewModel.getAllRepositories()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        // onNext
+                        this::setRepositories,
+                        // onError
+                        { error -> Log.d(TAG, "Error: ", error) },
+                        // onComplete
+                        { Log.d(TAG, "Completed: ") }
+                )
+        )
 
     }
 
@@ -52,26 +60,33 @@ class RepositoriesActivity : AppCompatActivity(), RepositoryAdapter.ClickItem, R
         mRecyclerView = findViewById(R.id.list_repos) as RecyclerView
 
         mProgress = findViewById(R.id.progress) as ProgressBar
-        mProgress!!.indeterminateDrawable.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), PorterDuff.Mode.MULTIPLY)
+        mProgress?.indeterminateDrawable?.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), PorterDuff.Mode.MULTIPLY)
 
 
-        mRecyclerView!!.setHasFixedSize(true)
+        mRecyclerView?.setHasFixedSize(true)
 
         mLayoutManager = LinearLayoutManager(this)
-        mRecyclerView!!.layoutManager = mLayoutManager
+        mRecyclerView?.layoutManager = mLayoutManager
 
         mAdapter = RepositoryAdapter()
-        mAdapter!!.clickListener = this
-        mRecyclerView!!.adapter = mAdapter
+        mAdapter?.clickListener = this
+        mRecyclerView?.adapter = mAdapter
 
     }
 
-    override fun setRepositories(repositories: List<Repository>) {
-        mAdapter!!.setItems(repositories)
-        mProgress!!.visibility = View.GONE
-        mRecyclerView!!.visibility = View.VISIBLE
+    private fun setRepositories(repositories: List<Repository>) {
+        mAdapter?.setItems(repositories)
+        mProgress?.visibility = View.GONE
+        mRecyclerView?.visibility = View.VISIBLE
     }
+
     override fun onClick(binding: ListItemBinding) {
-//        Log.d("h2", "click" + binding.repo.name!!)
+        Log.d("h2", "click" + binding.repo?.name)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        mSubscription.unsubscribe()
     }
 }

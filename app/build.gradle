@@ -4,7 +4,7 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.3"
+    buildToolsVersion "26.0.2"
 
     defaultConfig {
         applicationId "br.com.hussan.githubapi"
@@ -45,8 +45,6 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.1.0'
 
     compile 'com.squareup.picasso:picasso:2.5.2'
-
-    compile 'com.google.dagger:dagger:2.7'
-    kapt 'com.google.dagger:dagger-compiler:2.7'
+    kapt 'com.android.databinding:compiler:3.0.1'
 
 }
