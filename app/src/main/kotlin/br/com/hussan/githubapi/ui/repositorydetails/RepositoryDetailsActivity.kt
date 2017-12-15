@@ -7,7 +7,6 @@ import br.com.hussan.githubapi.R
 // https://developer.github.com/v3/repos/#get
 // Create ViewModel
 // Create DataSource
-// Create Api call
 
 class RepositoryDetailsActivity : AppCompatActivity() {
 
@@ -20,7 +19,6 @@ class RepositoryDetailsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_repository_details)
 
         initUI()
-
 
     }
 

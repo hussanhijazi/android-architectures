@@ -13,4 +13,8 @@ interface ApiInterface {
     @GET("/users/{user}/repos")
     fun repositories(
             @Path("user") user: String): Observable<List<Repository>>
+
+    @GET("/repos/{owner}/{repo}")
+    fun repository(
+            @Path("owner") user: String, @Path("repo") repo: String): Observable<Repository>
 }
