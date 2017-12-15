@@ -4,6 +4,8 @@ buildscript {
     ext.kotlin_version = '1.1.4'
     repositories {
         jcenter()
+        google()
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
@@ -12,20 +14,12 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
-apply plugin: 'kotlin'
 
 allprojects {
     repositories {
         jcenter()
+        google()
+
     }
 }
 
-repositories {
-    mavenCentral()
-}
-dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-}
-sourceSets {
-    main.java.srcDirs += 'src/main/kotlin'
-}

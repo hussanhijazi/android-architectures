@@ -10,18 +10,22 @@ import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import br.com.hussan.githubapi.R
+import br.com.hussan.githubapi.data.RepositoryModel
 import br.com.hussan.githubapi.data.model.Repository
 import br.com.hussan.githubapi.databinding.ListItemBinding
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
-import rx.subscriptions.CompositeSubscription
+import br.com.hussan.githubapi.ui.repositorydetails.RepositoryDetailsActivity
+import br.com.hussan.githubapi.utils.myStartActivity
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
+
 
 class RepositoriesActivity : RepositoryAdapter.ClickItem, AppCompatActivity() {
 
     private val TAG = RepositoriesActivity::class.java.simpleName
 
     private val viewModel: RepositoriesViewModel by lazy {
-        RepositoriesViewModel()
+        RepositoriesViewModel(RepositoryModel())
     }
 
     private var mRecyclerView: RecyclerView? = null
@@ -29,8 +33,11 @@ class RepositoriesActivity : RepositoryAdapter.ClickItem, AppCompatActivity() {
     private var mAdapter: RepositoryAdapter? = null
     private var mLayoutManager: RecyclerView.LayoutManager? = null
 
-    private val mSubscription = CompositeSubscription()
+    private val mDisposable = CompositeDisposable()
 
+    companion object {
+        val NAME = "NAME"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -40,7 +47,7 @@ class RepositoriesActivity : RepositoryAdapter.ClickItem, AppCompatActivity() {
 
         initUI()
 
-        mSubscription.add(
+        mDisposable.add(
                 viewModel.getAllRepositories()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -81,12 +88,21 @@ class RepositoriesActivity : RepositoryAdapter.ClickItem, AppCompatActivity() {
     }
 
     override fun onClick(binding: ListItemBinding) {
+
         Log.d("h2", "click" + binding.repo?.name)
+
+        val bundle = Bundle().apply {
+            putString(NAME, binding.repo?.name)
+        }
+
+        myStartActivity(RepositoryDetailsActivity::class.java, bundle)
+
     }
 
     override fun onDestroy() {
         super.onDestroy()
 
-        mSubscription.unsubscribe()
+        mDisposable.dispose()
     }
 }
+

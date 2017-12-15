@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import br.com.hussan.githubapi.BR
 import br.com.hussan.githubapi.R
-import br.com.hussan.githubapi.utils.DataBoundViewHolder
 import br.com.hussan.githubapi.data.model.Repository
 import br.com.hussan.githubapi.databinding.ListItemBinding
+import br.com.hussan.githubapi.utils.DataBoundViewHolder
 
 
 /**
@@ -46,6 +46,6 @@ class RepositoryAdapter : RecyclerView.Adapter<RepositoryAdapter.ViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return mDataset!!.size
+        return mDataset?.size ?: 0
     }
 }
