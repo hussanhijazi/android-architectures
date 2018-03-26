@@ -1,52 +1,164 @@
+
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.3"
+    compileSdkVersion build_versions.target_sdk
+    buildToolsVersion build_versions.build_tools
 
     defaultConfig {
         applicationId "br.com.hussan.githubapi"
-        minSdkVersion 15
-        targetSdkVersion 23
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
         versionCode 1
         versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    // Set your Signing Configs
+    signingConfigs {
+        release {
+            storeFile file("ddsday.jks")
+            storePassword "1234"
+            keyAlias "123-123"
+            keyPassword "1234"
+        }
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            signingConfig signingConfigs.release
+
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            useProguard false
+
         }
     }
     dataBinding {
         enabled = true
     }
-
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
+    sourceSets {
+        main{
+            java.srcDirs += 'src/main/kotlin'
+        }
+        staging{
+            java.srcDirs += 'src/prod/kotlin'
+        }
+        debug{
+            java.srcDirs += ['src/main/kotlin', 'src/debug/kotlin']
+        }
+        test{
+            java.srcDirs += 'src/test/kotlin'
+        }
+
+    }
+    flavorDimensions 'dimension'
+
+    productFlavors {
+        prod {
+            dimension 'dimension'
+            buildConfigField "String", "API_URL", "\"https://api.github.com/\""
+        }
+        staging {
+            dimension 'dimension'
+            buildConfigField "String", "API_URL", "\"https://api.github.com/\""
+        }
+    }
+
 }
-kapt {
-    generateStubs = true
-}
+
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    // Support libraries
+    implementation deps.support.app_compat
+    implementation deps.support.recyclerview
+    implementation deps.support.cardview
+    implementation deps.support.design
 
-    compile 'com.android.support:appcompat-v7:24.2.0'
-    compile 'com.android.support:recyclerview-v7:24.2.0'
-    compile 'com.android.support:cardview-v7:24.2.0'
 
-    compile 'com.squareup.retrofit2:retrofit:2.0.1'
-    compile 'com.squareup.retrofit2:converter-gson:2.0.1'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.1'
-    compile 'io.reactivex:rxandroid:1.1.0'
+    // Architecture components
+    implementation deps.lifecycle.runtime
+    implementation deps.lifecycle.extensions
 
-    compile 'com.squareup.picasso:picasso:2.5.2'
+    kapt deps.lifecycle.compiler
+    implementation deps.room.runtime
+    kapt deps.room.compiler
+    implementation deps.room.rxjava2
 
-    compile 'com.google.dagger:dagger:2.7'
-    kapt 'com.google.dagger:dagger-compiler:2.7'
+    // RxJava
+    implementation deps.rx_android
+    implementation deps.rxjava2
 
+    implementation deps.retrofit.runtime
+    implementation deps.retrofit.gson
+    implementation deps.retrofit.rxjava2adapter
+    implementation deps.glide
+
+    implementation deps.dagger.runtime
+    implementation deps.dagger.android
+    implementation deps.dagger.android_support
+    implementation deps.constraint_layout
+
+    implementation deps.rxjava2
+    implementation deps.rx_android
+    implementation deps.timber
+
+    kapt deps.dagger.android_support_compiler
+    kapt deps.dagger.compiler
+    kapt deps.room.compiler
+    kapt deps.lifecycle.compiler
+
+    // Kotlin
+    implementation deps.kotlin.stdlib
+
+    // Debug
+    implementation deps.stheto
+    implementation deps.okhttp3Interceptor
+    debugImplementation deps.sthetoOkhttp3
+
+
+    // Dependencies for local unit tests
+    testImplementation deps.junit
+    testImplementation deps.mockito.all
+    testImplementation deps.hamcrest
+    testImplementation deps.arch_core.testing
+    testImplementation deps.kotlin.stdlib
+    testImplementation deps.kotlin.test
+
+    // Android Testing Support Library's runner and rules
+    testImplementation deps.junit
+    testImplementation deps.mock_web_server
+    testImplementation (deps.arch_core.testing, {
+        exclude group: 'com.android.support', module: 'support-compat'
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.android.support', module: 'support-core-utils'
+    })
+    testImplementation deps.mockito.core
+
+    androidTestImplementation deps.support.app_compat
+    androidTestImplementation deps.support.recyclerview
+    androidTestImplementation deps.support.cardview
+    androidTestImplementation deps.support.design
+
+    androidTestImplementation(deps.espresso.core, {
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.google.code.findbugs', module: 'jsr305'
+    })
+    androidTestImplementation(deps.espresso.contrib, {
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.google.code.findbugs', module: 'jsr305'
+    })
+
+    androidTestImplementation(deps.arch_core.testing, {
+    })
+    androidTestImplementation deps.dexmaker
+    androidTestImplementation deps.mockito.core, { exclude group: 'net.bytebuddy' }
 }

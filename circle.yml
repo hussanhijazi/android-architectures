@@ -1,0 +1,34 @@
+machine:
+  java:
+    version: openjdk8
+
+general:
+  branches:
+    only:
+      - master
+      - develop
+
+dependencies:
+  pre:
+    - "[[ ! -s \"$(git rev-parse --git-dir)/shallow\" ]] || git fetch --unshallow"
+    - echo y | android update sdk --no-ui --all --filter "tools,android-25,build-tools-25.0.1,platform-tools,extra-android-m2repository,extra-google-m2repository,extra-google-google_play_services"
+    - mkdir $ANDROID_HOME/licenses/
+    - cp -r ci/android-sdk-license $ANDROID_HOME/licenses/
+    - cp -r ci/android-sdk-preview-license $ANDROID_HOME/licenses/
+    - cp -r ci/repositories.cfg /home/ubuntu/.android/
+  override:
+    - ./gradlew dependencies
+
+test:
+  override:
+    - ./gradlew :app:testMockDebugUnitTest -Pcom.android.build.threadPoolSize=1 -Dorg.gradle.parallel=false -Dorg.gradle.jvmargs="-Xms512m -Xmx512m" -Dorg.gradle.daemon=false
+  post:
+    - cp -r app/build/test-results/mockDebug/* $CIRCLE_TEST_REPORTS
+
+deployment:
+  master:
+      branch: master
+      commands:
+        - ./gradlew testfairyProdRelease -Pcom.android.build.threadPoolSize=1 -Dorg.gradle.parallel=false -Dorg.gradle.jvmargs="-Xms512m -Xmx512m" -Dorg.gradle.daemon=false
+        - git describe --tags --abbrev=0 || echo "0.0"
+        - git rev-list --count HEAD || echo "0"

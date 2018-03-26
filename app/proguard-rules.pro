@@ -1,6 +1,6 @@
 # Add project specific ProGuard rules here.
 # By default, the flags in this file are appended to flags specified
-# in /Users/hussan/Library/Android/sdk/tools/proguard/proguard-android.txt
+# in /usr/local/Cellar/android-sdk/23.0.2/tools/proguard/proguard-android.txt
 # You can edit the include path and order by changing the proguardFiles
 # directive in build.gradle.
 #
@@ -15,3 +15,9 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-dontwarn butterknife.internal.**
+-keep class **$$ViewInjector { *; }
+-keepnames class * { @butterknife.Bind *;}
+-keepclassmembers class ** {
+}
