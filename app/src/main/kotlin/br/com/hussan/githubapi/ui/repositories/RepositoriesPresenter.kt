@@ -1,6 +1,7 @@
 package br.com.hussan.githubapi.ui.repositories
 
 import android.util.Log
+import br.com.hussan.githubapi.data.RepositoryModel
 import br.com.hussan.githubapi.data.model.Repository
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers

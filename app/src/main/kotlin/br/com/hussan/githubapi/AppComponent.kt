@@ -1,8 +1,8 @@
 package br.com.hussan.githubapi
 
 import br.com.hussan.githubapi.data.api.ApiModule
-import br.com.hussan.githubapi.ui.repositories.ui.PresenterModule
-import br.com.hussan.githubapi.ui.repositories.ui.UiComponent
+import br.com.hussan.githubapi.injection.ui.PresenterModule
+import br.com.hussan.githubapi.injection.ui.UiComponent
 import dagger.Component
 import javax.inject.Singleton
 

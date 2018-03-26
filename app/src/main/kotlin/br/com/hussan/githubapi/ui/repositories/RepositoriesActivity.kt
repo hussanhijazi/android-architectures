@@ -11,17 +11,13 @@ import android.widget.ProgressBar
 import br.com.hussan.githubapi.GithubApp
 import br.com.hussan.githubapi.R
 import br.com.hussan.githubapi.adapters.RepositoryAdapter
-import br.com.hussan.githubapi.data.api.ApiInterface
 import br.com.hussan.githubapi.data.model.Repository
 import br.com.hussan.githubapi.databinding.ListItemBinding
-import br.com.hussan.githubapi.ui.repositories.ui.PresenterModule
-import br.com.hussan.githubapi.ui.repositories.ui.UiComponent
+import br.com.hussan.githubapi.injection.ui.PresenterModule
+import br.com.hussan.githubapi.injection.ui.UiComponent
 import javax.inject.Inject
 
 class RepositoriesActivity : AppCompatActivity(), RepositoryAdapter.ClickItem, RepositoriesContract.View {
-
-    @Inject
-    lateinit var apiService: ApiInterface
 
     @Inject
     lateinit var presenter: RepositoriesContract.Presenter

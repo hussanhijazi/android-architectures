@@ -1,4 +1,4 @@
-package br.com.hussan.githubapi.ui.repositories.ui
+package br.com.hussan.githubapi.injection.ui
 
 import br.com.hussan.githubapi.ui.repositories.RepositoriesActivity
 import dagger.Subcomponent

@@ -1,9 +1,9 @@
-package br.com.hussan.githubapi.ui.repositories.ui
+package br.com.hussan.githubapi.injection.ui
 
 import br.com.hussan.githubapi.BaseView
+import br.com.hussan.githubapi.data.RepositoryModel
 import br.com.hussan.githubapi.ui.repositories.RepositoriesContract
 import br.com.hussan.githubapi.ui.repositories.RepositoriesPresenter
-import br.com.hussan.githubapi.ui.repositories.RepositoryModel
 import dagger.Module
 import dagger.Provides
 

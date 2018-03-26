@@ -1,4 +1,4 @@
-package br.com.hussan.githubapi.ui.repositories
+package br.com.hussan.githubapi.data
 
 import br.com.hussan.githubapi.data.api.ApiInterface
 import br.com.hussan.githubapi.data.model.Repository
