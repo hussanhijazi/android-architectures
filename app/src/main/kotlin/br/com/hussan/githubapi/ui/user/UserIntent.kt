@@ -7,13 +7,4 @@ sealed class UserIntent : BaseIntent{
     data class GetUser(val name: String) : UserIntent()
     data class InsertUser(val name: String) : UserIntent()
 
-//    data class RefreshIntent(val forceUpdate: Boolean) : UserIntent()
-//
-//    data class ActivateTaskIntent(val task: User) : UserIntent()
-//
-//    data class CompleteTaskIntent(val task: User) : UserIntent()
-//
-//    object ClearCompletedTasksIntent : UserIntent()
-
-//    data class ChangeFilterIntent(val filterType: TasksFilterType) : UserIntent()
 }

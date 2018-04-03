@@ -40,10 +40,6 @@ class UserActivity : AppCompatActivity(), Injectable, BaseView<UserIntent, UserV
 
         disposable.add(viewModel.states().subscribe(this::render))
         viewModel.processIntents(intents())
-//
-//        update.setOnClickListener {
-//            UserIntent.GetUser(user_name_input.text.toString())
-//        }
     }
     override fun intents(): Observable<UserIntent> {
         return Observable.merge(initialIntent(),
@@ -65,49 +61,14 @@ class UserActivity : AppCompatActivity(), Injectable, BaseView<UserIntent, UserV
         }
     }
     override fun render(state: UserViewState) {
-        Log.d("h2State", state.toString())
+        Log.d("h222", state.toString())
+        state.user?.let{
+            user_name.text = it.login
+        }
     }
-    private fun getGitHubUser() {
-        val userName = user_name_input.text.toString()
-
-
-
-
-//        disposable.add(
-//                viewModel.getUser(userName)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .doOnNext { viewModel.updateUserName(it.login)}
-//                .subscribe({ this.user_name.text  = it.login},
-//                        { error -> Log.e(TAG, "Unable to get username", error) })
-//        )
-
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-//        disposable.add(viewModel.getLastQuery()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe({ this.user_name.text = it },
-//                        { error -> Log.e(TAG, "Unable to get username", error) }))
-    }
-
     override fun onStop() {
         super.onStop()
         disposable.clear()
-    }
-
-    private fun updateUserName() {
-        val userName = user_name_input.text.toString()
-        update.isEnabled = false
-//        viewModel.updateUserName(userName)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe({ update.isEnabled = true },
-//                        { error -> Log.e(TAG, "Unable to update username", error) })
-//                .addToCompositeDisposable(disposable)
     }
 
 }

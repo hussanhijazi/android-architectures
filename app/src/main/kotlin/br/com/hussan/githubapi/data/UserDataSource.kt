@@ -5,13 +5,12 @@ import br.com.hussan.githubapi.data.local.PreferencesDataSource
 import br.com.hussan.githubapi.data.local.db.UserDao
 import br.com.hussan.githubapi.data.model.User
 import br.com.hussan.githubapi.data.remote.AppApi
-import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 
 interface UserDataSource {
     fun getLastQuery(): Single<String>
-    fun insertUser(user: User): Completable
+    fun insertUser(user: User): Observable<Any>
     fun getUser(login: String): Observable<User>
 }
 class UserRepository(private val appApi: AppApi,
@@ -24,9 +23,11 @@ class UserRepository(private val appApi: AppApi,
                 preferencesDataSource.storeUser(it.login)
             }
 
-    override fun insertUser(user: User): Completable =
-            Completable.create { userDao.insertUser(user) }
+    override fun insertUser(user: User): Observable<Any> {
+        Log.d("h2-ins", "$user")
 
+        return Observable.fromCallable { userDao.insertUser(user) }
+    }
     override fun getLastQuery(): Single<String> {
         Log.d("h2", "getLastquery")
         return userDao.getLastQuery()

@@ -63,8 +63,7 @@ class UserViewModel
          * This is basically like a big switch statement of all possible types for the [BaseResult]
          */
         private val reducer = BiFunction { previousState: UserViewState, result: UserResult ->
-            Log.d("h2-red", result.toString() + " -- ")
-
+            Log.d("h2-", previousState.toString())
             when (result) {
                 is UserResult.LoadUserResult -> when (result) {
                     is UserResult.LoadUserResult.Success -> {
