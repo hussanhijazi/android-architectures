@@ -10,6 +10,7 @@ import android.arch.persistence.room.Query
 import br.com.hussan.githubapi.data.model.User
 
 import io.reactivex.Flowable
+import io.reactivex.Single
 
 /**
  * Interface for database access for User related operations.
@@ -20,6 +21,6 @@ interface UserDao {
     fun insertUser(user: User)
 
     @Query("SELECT * FROM users order by rowid desc limit 1")
-    fun getLastQuery(): Flowable<User>
+    fun getLastQuery(): Single<User>
 
 }

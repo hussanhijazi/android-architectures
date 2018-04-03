@@ -6,9 +6,11 @@ import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import br.com.hussan.githubapi.BaseView
 import br.com.hussan.githubapi.R
 import br.com.hussan.githubapi.injection.Injectable
+import com.jakewharton.rxbinding2.view.RxView
 import dagger.android.AndroidInjection
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -36,9 +38,12 @@ class UserActivity : AppCompatActivity(), Injectable, BaseView<UserIntent, UserV
         AndroidInjection.inject(this)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(UserViewModel::class.java)
 
-        update.setOnClickListener {
-            getGitHubUser()
-        }
+        disposable.add(viewModel.states().subscribe(this::render))
+        viewModel.processIntents(intents())
+//
+//        update.setOnClickListener {
+//            UserIntent.GetUser(user_name_input.text.toString())
+//        }
     }
     override fun intents(): Observable<UserIntent> {
         return Observable.merge(initialIntent(),
@@ -54,16 +59,18 @@ class UserActivity : AppCompatActivity(), Injectable, BaseView<UserIntent, UserV
     private fun initialIntent(): Observable<UserIntent.InitialIntent> {
         return Observable.just(UserIntent.InitialIntent)
     }
-    private fun getUserIntent(): Observable<UserIntent.GetUser> {
-        return Observable.just(UserIntent.GetUser)
+    private fun getUserIntent(): Observable<UserIntent.InsertUser> {
+        return RxView.clicks(update).map {
+            UserIntent.InsertUser(user_name_input.text.toString())
+        }
     }
     override fun render(state: UserViewState) {
+        Log.d("h2State", state.toString())
     }
     private fun getGitHubUser() {
         val userName = user_name_input.text.toString()
 
-        disposable.add(viewModel.states().subscribe(this::render))
-        viewModel.processIntents(intents())
+
 
 
 //        disposable.add(

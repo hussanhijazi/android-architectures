@@ -95,6 +95,7 @@ dependencies {
     // RxJava
     implementation deps.rx_android
     implementation deps.rxjava2
+    implementation deps.rxBindingVersion
 
     implementation deps.retrofit.runtime
     implementation deps.retrofit.gson

@@ -3,6 +3,7 @@
 package br.com.hussan.githubapi.ui.user
 
 import android.arch.lifecycle.ViewModel
+import android.util.Log
 import br.com.hussan.githubapi.BaseViewModel
 import br.com.hussan.githubapi.BaseViewState
 import io.reactivex.Observable
@@ -27,7 +28,7 @@ class UserViewModel
     private fun compose(): Observable<UserViewState> {
         return intentsSubject
             .map(this::actionFromIntent)
-            .compose(actionProcessorHolder.loadUserProcessor)
+            .compose(actionProcessorHolder.actionProcessor)
             // Cache each state and pass it to the reducer to create a new state from
             // the previous cached one and the latest Result emitted from the action processor.
             // The Scan operator is used here for the caching.
@@ -43,12 +44,13 @@ class UserViewModel
             // This allows the stream to stay alive even when the UI disconnects and
             // match the stream's lifecycle to the ViewModel's one.
             .autoConnect(0)
+
     }
     private fun actionFromIntent(intent: UserIntent): UserAction {
         return when (intent) {
-            is UserIntent.InitialIntent -> UserAction.InitialAction()
-            is UserIntent.GetUser -> UserAction.GetUser()
-
+            is UserIntent.InitialIntent -> UserAction.InitialAction
+            is UserIntent.GetUser -> UserAction.GetUser(intent.name)
+            is UserIntent.InsertUser -> UserAction.InsertUser(intent.name)
         }
     }
 
@@ -61,6 +63,8 @@ class UserViewModel
          * This is basically like a big switch statement of all possible types for the [BaseResult]
          */
         private val reducer = BiFunction { previousState: UserViewState, result: UserResult ->
+            Log.d("h2-red", result.toString() + " -- ")
+
             when (result) {
                 is UserResult.LoadUserResult -> when (result) {
                     is UserResult.LoadUserResult.Success -> {

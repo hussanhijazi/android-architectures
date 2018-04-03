@@ -4,7 +4,8 @@ import br.com.hussan.githubapi.BaseIntent
 
 sealed class UserIntent : BaseIntent{
     object InitialIntent : UserIntent()
-    object GetUser : UserIntent()
+    data class GetUser(val name: String) : UserIntent()
+    data class InsertUser(val name: String) : UserIntent()
 
 //    data class RefreshIntent(val forceUpdate: Boolean) : UserIntent()
 //
