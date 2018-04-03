@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">MVVMAndroidExample</string>
+    <string name="app_name">MVIAndroidExample</string>
     <string name="update_user">Update username</string>
 </resources>
