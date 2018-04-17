@@ -54,6 +54,7 @@ lifecycle.runtime = "android.arch.lifecycle:runtime:$versions.arch"
 lifecycle.extensions = "android.arch.lifecycle:extensions:$versions.arch"
 lifecycle.java8 = "android.arch.lifecycle:common-java8:$versions.arch"
 lifecycle.compiler = "android.arch.lifecycle:compiler:$versions.arch"
+lifecycle.reactivestreams = "android.arch.lifecycle:reactivestreams:$versions.arch"
 deps.lifecycle = lifecycle
 
 def arch_core = [:]

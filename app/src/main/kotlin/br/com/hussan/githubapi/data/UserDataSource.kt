@@ -7,6 +7,7 @@ import br.com.hussan.githubapi.data.remote.AppApi
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Observable
+import timber.log.Timber
 
 interface UserDataSource {
     fun getLastQuery(): Flowable<String>
@@ -19,6 +20,7 @@ class UserRepository(private val appApi: AppApi,
 {
     override fun getUser(login: String): Observable<User> =
             appApi.getUser(login).doOnNext {
+                Timber.i(it.login)
                 preferencesDataSource.storeUser(it.login)
             }
 
