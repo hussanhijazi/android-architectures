@@ -38,19 +38,21 @@ constructor(private val appExecutors: AppExecutors? = null) {
 
             if (response!!.isSuccessful) {
                 appExecutors?.diskIO()?.execute {
-                    processResponse(response)?.let { saveCallResult(it) }
+                    processResponse(response)?.let {
+                        saveCallResult(it)
+                    }
                     appExecutors.mainThread().execute {
                         // we specially request a new live data,
                         // otherwise we will get immediately last cached value,
                         // which may not be updated with latest results received from network.
-                        result.addSource(loadFromDb()
-                        ) { resultType -> result.value = Resource.success(resultType) }
+                        result.addSource(loadFromDb()) { resultType ->
+                            result.value = Resource.success(resultType)
+                        }
                     }
                 }
             } else {
                 onFetchFailed()
-                result.addSource(dbSource
-                ) { resultType -> result.value = response.errorMessage?.let { Resource.error(it, resultType) } }
+                result.addSource(dbSource) { resultType -> result.value = response.errorMessage?.let { Resource.error(it, resultType) } }
             }
         }
     }

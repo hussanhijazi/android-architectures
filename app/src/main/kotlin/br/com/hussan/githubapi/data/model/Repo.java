@@ -40,7 +40,6 @@ public class Repo {
         this.owner = owner;
         this.stars = stars;
     }
-
     public static class Owner {
         @SerializedName("login")
         @NonNull

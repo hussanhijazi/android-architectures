@@ -21,8 +21,7 @@ class AppExecutors(private val diskIO: Executor, private val networkIO: Executor
 
     @Inject
     constructor() : this(Executors.newSingleThreadExecutor(), Executors.newFixedThreadPool(3),
-            MainThreadExecutor()) {
-    }
+            MainThreadExecutor())
 
     fun diskIO(): Executor {
         return diskIO

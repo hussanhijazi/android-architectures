@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:name="br.com.hussan.githubapi.AppApplication"
         android:theme="@style/AppTheme">
-        <activity android:name="br.com.hussan.githubapi.ui.user.UserActivity">
+        <activity android:name="br.com.hussan.githubapi.ui.repositories.RepositoriesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

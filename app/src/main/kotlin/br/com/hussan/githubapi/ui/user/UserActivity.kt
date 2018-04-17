@@ -9,12 +9,9 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import br.com.hussan.githubapi.R
-import br.com.hussan.githubapi.extensions.addToCompositeDisposable
 import br.com.hussan.githubapi.injection.Injectable
 import dagger.android.AndroidInjection
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_user.*
 import javax.inject.Inject
 

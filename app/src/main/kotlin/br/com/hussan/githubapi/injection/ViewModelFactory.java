@@ -1,5 +1,3 @@
-
-
 package br.com.hussan.githubapi.injection;
 
 import android.arch.lifecycle.ViewModel;

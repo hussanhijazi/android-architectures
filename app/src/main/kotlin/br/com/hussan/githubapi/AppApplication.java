@@ -5,10 +5,9 @@ package br.com.hussan.githubapi;
 import android.app.Activity;
 import android.app.Application;
 
-import br.com.hussan.githubapi.injection.AppInjector;
-
 import javax.inject.Inject;
 
+import br.com.hussan.githubapi.injection.AppInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 import timber.log.Timber;

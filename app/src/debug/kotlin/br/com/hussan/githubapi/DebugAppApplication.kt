@@ -1,5 +1,6 @@
 package br.com.hussan.githubapi
 
+import android.util.Log
 import com.facebook.stetho.Stetho
 
 class DebugAppApplication: AppApplication() {

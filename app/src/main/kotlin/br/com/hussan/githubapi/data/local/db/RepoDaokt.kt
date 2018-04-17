@@ -2,20 +2,33 @@
 
 package br.com.hussan.githubapi.data.local.db
 
+import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
+import android.arch.persistence.room.Insert
+import android.arch.persistence.room.OnConflictStrategy
+import android.arch.persistence.room.Query
+import br.com.hussan.githubapi.data.model.Repo
 
 /**
  * Interface for database access on Repo related operations.
  */
 @Dao
-abstract class RepoDao//    @Insert(onConflict = OnConflictStrategy.REPLACE)
+interface RepoDaokt{
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertRepos(repositories: List<Repo>)
+
+    @Query("SELECT * FROM Repo "
+            + "WHERE owner_login = :owner "
+            + "ORDER BY stars DESC")
+    fun getRepositories(owner: String): LiveData<List<Repo>>
+}
+//    @Insert(onConflict = OnConflictStrategy.REPLACE)
 //    public abstract void insert(Repo... repos);
 //
 //    @Insert(onConflict = OnConflictStrategy.REPLACE)
 //    public abstract void insertContributors(List<Contributor> contributors);
 //
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    public abstract void insertRepos(List<Repo> repositories);
+
 //
 //    @Insert(onConflict = OnConflictStrategy.IGNORE)
 //    public abstract long createRepoIfNotExists(Repo repo);

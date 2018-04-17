@@ -3,8 +3,8 @@
 package br.com.hussan.githubapi.injection
 
 import android.app.Application
-import br.com.hussan.githubapi.app.injection.module.DataModule
 import br.com.hussan.githubapi.AppApplication
+import br.com.hussan.githubapi.app.injection.module.DataModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -17,7 +17,7 @@ import javax.inject.Singleton
         ApiModule::class,
         DBModule::class,
         DataModule::class,
-        MainActivityModule::class))
+        ActivityModule::class))
 interface AppComponent {
     @Component.Builder
     interface Builder {

@@ -1,5 +1,3 @@
-
-
 package br.com.hussan.githubapi.injection
 
 import android.content.Context
@@ -7,14 +5,12 @@ import android.net.ConnectivityManager
 import br.com.hussan.githubapi.BuildConfig
 import br.com.hussan.githubapi.data.LiveDataCallAdapterFactory
 import br.com.hussan.githubapi.data.remote.AppApi
-import br.com.hussan.githubapi.exceptions.NoNetworkException
-import br.com.hussan.githubapi.extensions.isConnected
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -30,17 +26,22 @@ open class ApiModule {
     @Singleton
     fun providesOkHttpClient(@Named("ApplicationContext") context: Context): OkHttpClient {
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val interceptor = HttpLoggingInterceptor()
+
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
 
         return getOkHttpBuilder()
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .writeTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)
-                .addInterceptor { chain ->
+            .addInterceptor(interceptor)
+
+            .addInterceptor { chain ->
                     val original = chain.request()
 
-                    if (!connectivityManager.isConnected) {
-                        throw NoNetworkException
-                    }
+//                    if (!connectivityManager.isConnected) {
+//                        throw NoNetworkException
+//                    }
 
                     val requestBuilder = original.newBuilder()
 

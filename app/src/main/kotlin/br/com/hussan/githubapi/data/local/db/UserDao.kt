@@ -1,5 +1,3 @@
-
-
 package br.com.hussan.githubapi.data.local.db
 
 import android.arch.persistence.room.Dao
@@ -11,8 +9,6 @@ import br.com.hussan.githubapi.data.model.User
 
 import io.reactivex.Flowable
 import android.arch.lifecycle.LiveData
-
-
 
 /**
  * Interface for database access for User related operations.

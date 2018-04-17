@@ -18,7 +18,7 @@ versions.dexmaker = "2.2.0"
 versions.constraint_layout = "1.0.2"
 versions.glide = "3.8.0"
 versions.timber = "4.5.1"
-versions.android_gradle_plugin = "3.0.1"
+versions.android_gradle_plugin = "3.1.0"
 versions.rxjava2 = "2.1.3"
 versions.rx_android = "2.0.1"
 versions.atsl_runner = "1.0.1"
@@ -28,7 +28,7 @@ versions.kotlin = "1.1.4-2"
 versions.paging = "1.0.0-alpha3"
 versions.rxJava2AdapterVersion = "1.0.0"
 versions.stheto = "1.5.0"
-versions.okhttp3Interceptor = "3.2.0"
+versions.okhttp3Interceptor = "3.8.1"
 
 def deps = [:]
 
@@ -112,6 +112,7 @@ deps.android_gradle_plugin = "com.android.tools.build:gradle:$versions.android_g
 deps.stheto = "com.facebook.stetho:stetho:$versions.stheto"
 deps.sthetoOkhttp3 = "com.facebook.stetho:stetho-okhttp3:$versions.stheto"
 deps.okhttp3Interceptor = "com.squareup.okhttp3:logging-interceptor:$versions.okhttp3Interceptor"
+deps.okhttp3 = "com.squareup.okhttp3:okhttp:$versions.okhttp3Interceptor"
 
 ext.deps = deps
 

@@ -1,14 +1,14 @@
 package br.com.hussan.githubapi.data
 
+import android.arch.lifecycle.LiveData
 import br.com.hussan.githubapi.AppExecutors
 import br.com.hussan.githubapi.data.local.PreferencesDataSource
 import br.com.hussan.githubapi.data.local.db.UserDao
+import br.com.hussan.githubapi.data.model.Resource
 import br.com.hussan.githubapi.data.model.User
 import br.com.hussan.githubapi.data.remote.AppApi
 import io.reactivex.Completable
 import io.reactivex.Flowable
-import android.arch.lifecycle.LiveData
-import br.com.hussan.githubapi.data.model.Resource
 
 
 interface UserDataSource {
@@ -28,7 +28,7 @@ class UserRepository(private val appApi: AppApi,
                 userDao.insertUser(item)
             }
             override fun shouldFetch(data: User?): Boolean {
-                return data == null
+                return true
             }
             override fun loadFromDb(): LiveData<User> {
                 return userDao.findByLogin(login)
