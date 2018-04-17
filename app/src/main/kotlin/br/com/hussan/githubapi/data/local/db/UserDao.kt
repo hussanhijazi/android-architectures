@@ -10,6 +10,9 @@ import android.arch.persistence.room.Query
 import br.com.hussan.githubapi.data.model.User
 
 import io.reactivex.Flowable
+import android.arch.lifecycle.LiveData
+
+
 
 /**
  * Interface for database access for User related operations.
@@ -18,6 +21,9 @@ import io.reactivex.Flowable
 interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertUser(user: User)
+
+    @Query("SELECT * FROM users WHERE login = :login")
+    fun findByLogin(login: String): LiveData<User>
 
     @Query("SELECT * FROM users order by rowid desc limit 1")
     fun getLastQuery(): Flowable<User>

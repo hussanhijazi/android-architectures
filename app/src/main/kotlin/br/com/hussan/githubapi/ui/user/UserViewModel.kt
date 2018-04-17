@@ -2,8 +2,10 @@
 
 package br.com.hussan.githubapi.ui.user
 
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
 import br.com.hussan.githubapi.data.UserDataSource
+import br.com.hussan.githubapi.data.model.Resource
 import br.com.hussan.githubapi.data.model.User
 import io.reactivex.Completable
 import io.reactivex.Flowable
@@ -20,6 +22,6 @@ class UserViewModel
         return dataSource.insertUser(user)
     }
 
-    fun getUser(login: String): Observable<User> = dataSource.getUser(login)
+    fun getUser(login: String): LiveData<Resource<User>> = dataSource.getUser(login)
 
 }

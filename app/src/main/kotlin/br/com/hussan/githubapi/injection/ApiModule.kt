@@ -5,6 +5,7 @@ package br.com.hussan.githubapi.injection
 import android.content.Context
 import android.net.ConnectivityManager
 import br.com.hussan.githubapi.BuildConfig
+import br.com.hussan.githubapi.data.LiveDataCallAdapterFactory
 import br.com.hussan.githubapi.data.remote.AppApi
 import br.com.hussan.githubapi.exceptions.NoNetworkException
 import br.com.hussan.githubapi.extensions.isConnected
@@ -56,7 +57,8 @@ open class ApiModule {
     @Singleton
     fun providesAppApi(okHttpClient: OkHttpClient): AppApi {
         val retrofit = Retrofit.Builder()
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+//                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(LiveDataCallAdapterFactory())
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(BuildConfig.API_URL)
                 .client(okHttpClient)

@@ -3,6 +3,7 @@ package br.com.hussan.githubapi.injection
 import android.app.Application
 import android.content.Context
 import br.com.hussan.githubapi.AppApplication
+import br.com.hussan.githubapi.AppExecutors
 import br.com.hussan.githubapi.data.local.PreferencesDataSource
 import br.com.hussan.githubapi.data.local.PreferencesRepository
 import dagger.Module
@@ -26,4 +27,8 @@ class AppModule {
     @Provides
     @Singleton
     fun providesApplication(application: AppApplication): AppApplication = application
+
+        @Provides
+    @Singleton
+    fun providesAppExecutor() = AppExecutors()
 }

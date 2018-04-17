@@ -2,6 +2,7 @@
 
 package br.com.hussan.githubapi.ui.user
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -44,41 +45,15 @@ class UserActivity : AppCompatActivity(), Injectable {
     private fun getGitHubUser() {
         val userName = user_name_input.text.toString()
 
-        disposable.add(
-                viewModel.getUser(userName)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext { viewModel.updateUserName(it.login)}
-                .subscribe({ this.user_name.text  = it.login},
-                        { error -> Log.e(TAG, "Unable to get username", error) })
-        )
+        val repo = viewModel.getUser(userName)
 
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        disposable.add(viewModel.getLastQuery()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ this.user_name.text = it },
-                        { error -> Log.e(TAG, "Unable to get username", error) }))
+        repo.observe(this, Observer {
+            this.user_name.text  = it?.data?.login?:return@Observer
+        })
     }
 
     override fun onStop() {
         super.onStop()
         disposable.clear()
     }
-
-    private fun updateUserName() {
-        val userName = user_name_input.text.toString()
-        update.isEnabled = false
-        viewModel.updateUserName(userName)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ update.isEnabled = true },
-                        { error -> Log.e(TAG, "Unable to update username", error) })
-                .addToCompositeDisposable(disposable)
-    }
-
 }
