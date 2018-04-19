@@ -1,0 +1,11 @@
+build:
+  warningThreshold: 5
+  failThreshold: 200
+autoCorrect: true
+failFast: true
+comments:
+  active: false
+VariableNaming:
+  active: false
+  variablePattern: '[a-z][A-Za-z0-9]*'
+  privateVariablePattern: '(_)?[a-z][A-Za-z0-9]*'

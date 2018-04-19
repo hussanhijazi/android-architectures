@@ -17,7 +17,7 @@ android {
     // Set your Signing Configs
     signingConfigs {
         release {
-            storeFile file("ddsday.jks")
+            storeFile file("ddsday.jks") 
             storePassword "1234"
             keyAlias "123-123"
             keyPassword "1234"
@@ -56,7 +56,9 @@ android {
         test{
             java.srcDirs += 'src/test/kotlin'
         }
-
+        androidTest{
+            java.srcDirs += 'src/androidTest/kotlin'
+        }
     }
     flavorDimensions 'dimension'
 

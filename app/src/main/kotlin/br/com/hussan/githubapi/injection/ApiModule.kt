@@ -1,7 +1,6 @@
 package br.com.hussan.githubapi.injection
 
 import android.content.Context
-import android.net.ConnectivityManager
 import br.com.hussan.githubapi.BuildConfig
 import br.com.hussan.githubapi.data.LiveDataCallAdapterFactory
 import br.com.hussan.githubapi.data.remote.AppApi
@@ -25,7 +24,7 @@ open class ApiModule {
     @Provides
     @Singleton
     fun providesOkHttpClient(@Named("ApplicationContext") context: Context): OkHttpClient {
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+//        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val interceptor = HttpLoggingInterceptor()
 
         interceptor.level = HttpLoggingInterceptor.Level.BODY

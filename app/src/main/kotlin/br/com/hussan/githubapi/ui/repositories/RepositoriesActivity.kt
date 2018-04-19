@@ -21,10 +21,13 @@ import javax.inject.Inject
 
 class RepositoriesActivity: AppCompatActivity(), Injectable {
 
+    @Suppress("LateinitUsage")
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-
+    @Suppress("LateinitUsage")
     private lateinit var viewModel: RepositoriesViewModel
+    @Suppress("LateinitUsage")
+    lateinit var binding: ViewDataBinding
 
     private val TAG = RepositoriesActivity::class.java.simpleName
 
@@ -33,7 +36,7 @@ class RepositoriesActivity: AppCompatActivity(), Injectable {
     private var mAdapter: RepositoryAdapter? = null
 
     private val mDisposable = CompositeDisposable()
-    lateinit var binding: ViewDataBinding
+
     companion object {
         val NAME = "NAME"
     }

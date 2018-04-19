@@ -7,7 +7,6 @@ import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import br.com.hussan.githubapi.R
 import br.com.hussan.githubapi.injection.Injectable
 import dagger.android.AndroidInjection
@@ -17,6 +16,7 @@ import javax.inject.Inject
 
 class UserActivity : AppCompatActivity(), Injectable {
 
+    @Suppress("LateinitUsage")
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -25,6 +25,7 @@ class UserActivity : AppCompatActivity(), Injectable {
         private val TAG = UserActivity::class.java.simpleName
     }
 
+    @Suppress("LateinitUsage")
     private lateinit var viewModel: UserViewModel
 
     private val disposable = CompositeDisposable()

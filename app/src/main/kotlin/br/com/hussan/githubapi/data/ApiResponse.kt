@@ -1,6 +1,5 @@
 package br.com.hussan.githubapi.data
 
-import android.util.ArrayMap
 import android.util.Log
 import retrofit2.Response
 import java.io.IOException
@@ -32,7 +31,7 @@ class ApiResponse<T> {
             var message: String? = null
             if (response.errorBody() != null) {
                 try {
-                    message = response.errorBody()!!.string()
+                    message = response.errorBody()?.string()
                 } catch (ignored: IOException) {
                     Log.e("Parse", "error while parsing response")
                 }

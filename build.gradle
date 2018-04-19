@@ -6,11 +6,22 @@ buildscript {
         classpath deps.kotlin.plugin
     }
 }
-
+plugins {
+    id 'io.gitlab.arturbosch.detekt' version '1.0.0.RC6-4'
+}
 allprojects {
     addRepos(repositories)
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+detekt {
+    version = '1.0.0.RC6-4'
+    profile('main') {
+        input = "$projectDir/app"
+        config = "$projectDir/detekt.yml"
+        filters = ".*/test/.*,.*/resources/.*,.*/build/.*,.*/res/.*"
+        parallel = true
+    }
 }

@@ -36,7 +36,7 @@ constructor(private val appExecutors: AppExecutors? = null) {
             result.removeSource(apiResponse)
             result.removeSource(dbSource)
 
-            if (response!!.isSuccessful) {
+            if (response?.isSuccessful == true) {
                 appExecutors?.diskIO()?.execute {
                     processResponse(response)?.let {
                         saveCallResult(it)
@@ -52,7 +52,7 @@ constructor(private val appExecutors: AppExecutors? = null) {
                 }
             } else {
                 onFetchFailed()
-                result.addSource(dbSource) { resultType -> result.value = response.errorMessage?.let { Resource.error(it, resultType) } }
+                result.addSource(dbSource) { resultType -> result.value = response?.errorMessage?.let { Resource.error(it, resultType) } }
             }
         }
     }
