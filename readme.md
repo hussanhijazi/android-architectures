@@ -1,5 +1,3 @@
-# retrofit-rxjava-databinding
-
 ## Branches
 - [Kotlin + Dagger2 + Arch Components(ViewModel/LiveData)](https://github.com/hussanhijazi/android-architectures/tree/kotlin-arch-components-livedata)
 - [Kotlin + Dagger2 + Arch Components(ViewModel) + RxJava](https://github.com/hussanhijazi/android-architectures/tree/kotlin-arch-components-rxjava)
